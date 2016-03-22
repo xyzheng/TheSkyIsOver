@@ -46,9 +46,13 @@
 	</Reference>
   </ItemGroup>
   <ItemGroup>
-     <Compile Include="Assets\Scripts\createTiles.cs" />
-     <Compile Include="Assets\Scripts\restart.cs" />
-     <Compile Include="Assets\Scripts\rotateTiles.cs" />
+     <Compile Include="Assets\Scripts\Puzzle Mode\createTiles.cs" />
+     <Compile Include="Assets\Scripts\Puzzle Mode\puzzleLogic.cs" />
+     <Compile Include="Assets\Scripts\Puzzle Mode\restart.cs" />
+     <Compile Include="Assets\Scripts\Puzzle Mode\rotateTiles.cs" />
+     <Compile Include="Assets\Scripts\Shooter Mode\ArmMovement.cs" />
+     <Compile Include="Assets\Scripts\Shooter Mode\PlayerController.cs" />
+     <Compile Include="Assets\Scripts\changeBetweenModes.cs" />
  <Reference Include="UnityEngine.Analytics">
  <HintPath>/Applications/Unity/Unity.app/Contents/UnityExtensions/Unity/UnityAnalytics/UnityEngine.Analytics.dll</HintPath>
  </Reference>

@@ -1,10 +1,9 @@
 ﻿<Properties>
-  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="MonoDevelop.Default" />
+  <MonoDevelop.Ide.Workspace />
   <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/createTiles.cs">
     <Files>
-      <File FileName="Assets/Scripts/createTiles.cs" Line="25" Column="40" />
-      <File FileName="Assets/Scripts/rotateTiles.cs" Line="4" Column="25" />
-      <File FileName="Assets/Scripts/restart.cs" Line="10" Column="4" />
+      <File FileName="Assets/Scripts/puzzleLogic.cs" Line="13" Column="2" />
+      <File FileName="Assets/Scripts/createTiles.cs" Line="32" Column="30" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>

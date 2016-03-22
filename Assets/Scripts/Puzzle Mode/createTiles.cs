@@ -15,14 +15,21 @@ public class createTiles : MonoBehaviour {
 	
 	// Use this for initialization
 	void Start () {
+		generateLevel ();
+	}
 
+	void generateLevel () {
 		for (int i=0; i<10; i+=2){
 			for (int j=0; j<10; j+=2){
+				if ((i == 8 && j == 8) || (i == 0 && j == 0)) {
+
+				}
 				int randomTileNum = Random.Range (1, 10);
 				if (randomTileNum == 1) {
 					Instantiate (bottomRight, new Vector3 (i, j, 0), Quaternion.identity);
 				}
-				if (randomTileNum == 2 && !((i == 8 && j == 8) || (i == 0 && j == 0))) {
+				//if (randomTileNum == 2 && !((i == 8 && j == 8) || (i == 0 && j == 0))) {
+				if (randomTileNum == 2) {
 					Instantiate (cross, new Vector3 (i, j, 0), Quaternion.identity);
 				}
 				if (randomTileNum == 3) {
@@ -46,7 +53,7 @@ public class createTiles : MonoBehaviour {
 				if (randomTileNum == 9) {
 					Instantiate (topRight, new Vector3 (i, j, 0), Quaternion.identity);
 				}
-
+				
 			}
 		}
 	}
