@@ -46,8 +46,10 @@
 	</Reference>
   </ItemGroup>
   <ItemGroup>
+     <Compile Include="Assets\Scripts\Puzzle Mode\Board.cs" />
+     <Compile Include="Assets\Scripts\Puzzle Mode\GameManager.cs" />
+     <Compile Include="Assets\Scripts\Puzzle Mode\Tile.cs" />
      <Compile Include="Assets\Scripts\Puzzle Mode\createTiles.cs" />
-     <Compile Include="Assets\Scripts\Puzzle Mode\puzzleLogic.cs" />
      <Compile Include="Assets\Scripts\Puzzle Mode\restart.cs" />
      <Compile Include="Assets\Scripts\Puzzle Mode\rotateTiles.cs" />
      <Compile Include="Assets\Scripts\Shooter Mode\ArmMovement.cs" />
