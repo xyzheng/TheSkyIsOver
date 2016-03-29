@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+﻿ using UnityEngine;
 using System.Collections;
 
 public class Board {
@@ -18,6 +18,7 @@ public class Board {
 		//fill board with clean tiles
 		reset();
 	}
+
 	//getter
 	public int getWidth() { 
 		return w; 
@@ -39,19 +40,7 @@ public class Board {
 			return -1;
 		}
 	}
-
-	/*
-	public Board getCopy() {
-		Board copy = new Board(w, h);
-		for (int i = 0; i < getWidth(); i++) {
-			for (int j = 0; j < getHeight(); j++) {
-				copy.setValueAtTo(i, j, getValueAt(i, j));
-			}
-		}
-		return copy;
-	}
-	*/
-
+		
 	//setter
 	public bool setValueAtTo(int x, int y, int value) {
 		if (isValid(x, y)) { 
