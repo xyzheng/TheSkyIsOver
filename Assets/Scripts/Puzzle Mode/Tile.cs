@@ -28,11 +28,4 @@ public class Tile : MonoBehaviour {
 		rend.color = Color.white;
 		connectedState = Connection.NOT_CONNECTED;
 	}
-
-	public void isConnected () {
-		if (connectedState == Connection.CONNECTED) {
-			SpriteRenderer rend = GetComponent<SpriteRenderer>();
-			rend.color = Color.yellow;
-		}
-	}
 }
