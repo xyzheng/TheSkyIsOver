@@ -16,6 +16,22 @@ public class Tile : MonoBehaviour {
 	public TileType type;
 	public Angle angle;
 	public Connection connectedState;
+	public bool startTile;
+
+	void Start () {
+		//startTile = false;
+	}
+
+	void Update () {
+		if (connectedState == Connection.CONNECTED) {
+			SpriteRenderer rend = GetComponent<SpriteRenderer>();
+			rend.color = Color.yellow;
+		}
+		else {
+			SpriteRenderer rend = GetComponent<SpriteRenderer>();
+			rend.color = Color.white;
+		}
+	}
 
 	public void connect () {
 		SpriteRenderer rend = GetComponent<SpriteRenderer>();

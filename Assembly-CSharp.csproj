@@ -51,8 +51,16 @@
      <Compile Include="Assets\Scripts\Puzzle Mode\createTiles.cs" />
      <Compile Include="Assets\Scripts\Puzzle Mode\rotateTiles.cs" />
      <Compile Include="Assets\Scripts\Shooter Mode\ArmMovement.cs" />
+     <Compile Include="Assets\Scripts\Shooter Mode\EnemyAI.cs" />
+     <Compile Include="Assets\Scripts\Shooter Mode\EnemyBullet.cs" />
+     <Compile Include="Assets\Scripts\Shooter Mode\EnemyControl.cs" />
+     <Compile Include="Assets\Scripts\Shooter Mode\EnemyGun.cs" />
+     <Compile Include="Assets\Scripts\Shooter Mode\EnemySpawner.cs" />
+     <Compile Include="Assets\Scripts\Shooter Mode\GameManagement.cs" />
+     <Compile Include="Assets\Scripts\Shooter Mode\LeftPlayerBullet.cs" />
+     <Compile Include="Assets\Scripts\Shooter Mode\PlayerBullet.cs" />
      <Compile Include="Assets\Scripts\Shooter Mode\PlayerController.cs" />
-     <Compile Include="Assets\Scripts\changeBetweenModes.cs" />
+     <Compile Include="Assets\Scripts\Shooter Mode\changeBetweenModes.cs" />
  <Reference Include="UnityEngine.UI">
  <HintPath>/Applications/Unity/Unity.app/Contents/UnityExtensions/Unity/GUISystem/UnityEngine.UI.dll</HintPath>
  </Reference>
