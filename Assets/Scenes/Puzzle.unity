@@ -117,6 +117,7 @@ MonoBehaviour:
   twoWay: {fileID: 186806, guid: 3fcea0a660fb1442ab5ef0e357d71905, type: 2}
   threeWay: {fileID: 121286, guid: 02a13bbcf50314349b931a3a818d9e3f, type: 2}
   cross: {fileID: 145250, guid: f133abaeb350945a0a7ca042401860a9, type: 2}
+  connectedTiles: []
 --- !u!212 &1323427059
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -267,12 +268,12 @@ GameObject:
   - 4: {fileID: 1985369296}
   - 82: {fileID: 1985369295}
   m_Layer: 0
-  m_Name: Audio Source
+  m_Name: spacedust
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!82 &1985369295
 AudioSource:
   m_ObjectHideFlags: 0
@@ -284,9 +285,9 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 8300000, guid: 2249991d9eb3f42d09798b396dd8f5ca, type: 3}
   m_PlayOnAwake: 1
-  m_Volume: 1
+  m_Volume: 0.7
   m_Pitch: 1
-  Loop: 0
+  Loop: 1
   Mute: 0
   Spatialize: 0
   Priority: 128
@@ -295,7 +296,7 @@ AudioSource:
   MaxDistance: 500
   Pan2D: 0
   rolloffMode: 0
-  BypassEffects: 0
+  BypassEffects: 1
   BypassListenerEffects: 0
   BypassReverbZones: 0
   rolloffCustomCurve:
