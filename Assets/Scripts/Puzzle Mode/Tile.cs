@@ -31,6 +31,7 @@ public class Tile : MonoBehaviour {
 			SpriteRenderer rend = GetComponent<SpriteRenderer>();
 			rend.color = Color.white;
 		}
+
 	}
 
 	public void connect () {

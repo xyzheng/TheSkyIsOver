@@ -12,6 +12,7 @@ GameObject:
   - 61: {fileID: 6157438}
   - 114: {fileID: 11499738}
   - 114: {fileID: 11427452}
+  - 95: {fileID: 9516794}
   m_Layer: 0
   m_Name: OneWay
   m_TagString: Tile
@@ -45,6 +46,23 @@ BoxCollider2D:
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
   m_Size: {x: 9, y: 9}
+--- !u!95 &9516794
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 153360}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 1d616b1e78e1e41d5b362bd7cee98eac, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
 --- !u!114 &11427452
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -59,6 +77,7 @@ MonoBehaviour:
   type: 0
   angle: 0
   connectedState: 0
+  startTile: 0
 --- !u!114 &11499738
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -70,6 +89,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 57d1fac3984dd4a69b87596bd10e95c7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  rotation: {fileID: 0}
 --- !u!212 &21233196
 SpriteRenderer:
   m_ObjectHideFlags: 1
@@ -119,6 +139,10 @@ Prefab:
       propertyPath: m_TagString
       value: Tile
       objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: m_Controller
+      value: 
+      objectReference: {fileID: 9100000, guid: 1d616b1e78e1e41d5b362bd7cee98eac, type: 2}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}
   m_RootGameObject: {fileID: 153360}
