@@ -28,8 +28,10 @@ public class Tile : MonoBehaviour {
 			rend.color = Color.yellow;
 		}
 		else {
-			SpriteRenderer rend = GetComponent<SpriteRenderer>();
-			rend.color = Color.white;
+			if (transform.position.x != 4 && transform.position.y != 4) {
+				SpriteRenderer rend = GetComponent<SpriteRenderer>();
+				rend.color = Color.white;
+			}
 		}
 
 	}

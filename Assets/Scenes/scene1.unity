@@ -94,6 +94,7 @@ GameObject:
   m_Component:
   - 4: {fileID: 76845463}
   - 212: {fileID: 76845465}
+  - 114: {fileID: 76845464}
   m_Layer: 0
   m_Name: catarm1
   m_TagString: Untagged
@@ -113,6 +114,17 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1160310468}
   m_RootOrder: 2
+--- !u!114 &76845464
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 76845462}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5dca29eaed7a4b74f9210ca31e550164, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!212 &76845465
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -366,6 +378,7 @@ GameObject:
   m_Component:
   - 4: {fileID: 688236687}
   - 212: {fileID: 688236689}
+  - 114: {fileID: 688236688}
   m_Layer: 0
   m_Name: catarm2
   m_TagString: Untagged
@@ -385,6 +398,17 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1160310468}
   m_RootOrder: 3
+--- !u!114 &688236688
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 688236686}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5dca29eaed7a4b74f9210ca31e550164, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!212 &688236689
 SpriteRenderer:
   m_ObjectHideFlags: 0

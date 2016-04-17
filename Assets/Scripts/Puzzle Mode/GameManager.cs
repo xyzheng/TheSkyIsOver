@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour {
 
@@ -15,7 +16,8 @@ public class GameManager : MonoBehaviour {
 
 	public GameObject[][] tiles;
 
-	public List<GameObject> connectedTiles = new List<GameObject>();
+	public List<GameObject> connectedTiles;
+	public List<GameObject> disconnectedTiles;
 	int index;
 
 	// Use this for initialization
@@ -27,6 +29,8 @@ public class GameManager : MonoBehaviour {
 		for (int i=0; i<width; i++) {
 			tiles[i] = new GameObject[height];
 		}
+		connectedTiles = new List<GameObject>();
+		disconnectedTiles = new List<GameObject>();
 		generateLevel ();
 	}
 	
@@ -42,6 +46,15 @@ public class GameManager : MonoBehaviour {
 		for (int i=0; i<connectedTiles.Count; i++) {
 			connectedTiles[i].GetComponent<Tile>().connectedState = Tile.Connection.CONNECTED;
 		}
+
+		for (int i=0; i<disconnectedTiles.Count; i++) {
+			disconnectedTiles[i].GetComponent<Tile>().connectedState = Tile.Connection.NOT_CONNECTED;
+		}
+
+		//win puzzle, change scene to shooter
+		if (connectedTiles.Contains (tiles[4][4])) {
+			SceneManager.LoadScene ("scene1");
+		}
 		/*
 		for (int i=0; i<5; i++) {
 			for (int j=0; j<5; j++) {
@@ -51,7 +64,8 @@ public class GameManager : MonoBehaviour {
 			}
 		}
 		*/
-		Debug.Log (index.ToString() + " " + connectedTiles.Count);
+
+		//Debug.Log (index.ToString() + " " + connectedTiles.Count);
 	}
 		
 	public void check () {
@@ -61,7 +75,7 @@ public class GameManager : MonoBehaviour {
 				if (tiles[i][j].GetComponent<Tile>().type == Tile.TileType.ONE_WAY) {
 					//if tile is rotated 0 degrees or 180
 					if (((tiles[i][j].GetComponent<Tile>().angle == Tile.Angle.ROTATE_0 || tiles[i][j].GetComponent<Tile>().angle == Tile.Angle.ROTATE_180) 
-						&& (checkTop (i, j) || checkBottom (i, j))) || tiles[i][j].GetComponent<Tile>().startTile == true ) {
+						&& (checkTop (i, j) || checkBottom (i, j)))) {
 							//tiles[i][j].GetComponent<Tile>().connectedState = Tile.Connection.CONNECTED;
 						if (!connectedTiles.Contains (tiles[i][j])) {
 							connectedTiles.Add (tiles[i][j]);
@@ -69,7 +83,7 @@ public class GameManager : MonoBehaviour {
 						}
 					}
 					else if (((tiles[i][j].GetComponent<Tile>().angle == Tile.Angle.ROTATE_90 || tiles[i][j].GetComponent<Tile>().angle == Tile.Angle.ROTATE_270)
-						&& (checkLeft(i, j) || checkRight(i, j))) || tiles[i][j].GetComponent<Tile>().startTile == true ) {
+						&& (checkLeft(i, j) || checkRight(i, j)))) {
 							//tiles[i][j].GetComponent<Tile>().connectedState = Tile.Connection.CONNECTED;
 						if (!connectedTiles.Contains (tiles[i][j])) {
 							connectedTiles.Add (tiles[i][j]);
@@ -80,9 +94,10 @@ public class GameManager : MonoBehaviour {
 					else {
 						//connectedTiles.Remove(tiles[i][j]);
 						if (i == 0 && j == 0) {
-
+							for (int k=1; k<connectedTiles.Count; k++) {
+								disconnectedTiles.Add (connectedTiles[i]);
+							}
 							connectedTiles.RemoveRange(1, connectedTiles.Count - 1);
-
 						}
 						/*
 						for (int ind=index; ind<connectedTiles.Count; ind++) {
@@ -100,7 +115,7 @@ public class GameManager : MonoBehaviour {
 				//if tile is a two way
 				if (tiles[i][j].GetComponent<Tile>().type == Tile.TileType.TWO_WAY) {
 					//if tile is rotated 0 degrees && check top or right
-					if ((tiles[i][j].GetComponent<Tile>().angle == Tile.Angle.ROTATE_0 && (checkTop (i, j) || checkRight (i, j))) || tiles[i][j].GetComponent<Tile>().startTile == true) {
+					if ((tiles[i][j].GetComponent<Tile>().angle == Tile.Angle.ROTATE_0 && (checkTop (i, j) || checkRight (i, j)))) {
 						//tiles[i][j].GetComponent<Tile>().connectedState = Tile.Connection.CONNECTED;
 						if (!connectedTiles.Contains (tiles[i][j])) {
 							connectedTiles.Add (tiles[i][j]);
@@ -108,7 +123,7 @@ public class GameManager : MonoBehaviour {
 						}
 					}
 					//if rotated 90 degrees && check top or left
-					else if ((tiles[i][j].GetComponent<Tile>().angle == Tile.Angle.ROTATE_90 && (checkTop (i, j) || checkLeft (i, j))) || tiles[i][j].GetComponent<Tile>().startTile == true) {
+					else if ((tiles[i][j].GetComponent<Tile>().angle == Tile.Angle.ROTATE_90 && (checkTop (i, j) || checkLeft (i, j)))) {
 						//tiles[i][j].GetComponent<Tile>().connectedState = Tile.Connection.CONNECTED;
 						if (!connectedTiles.Contains (tiles[i][j])) {
 							connectedTiles.Add (tiles[i][j]);
@@ -116,7 +131,7 @@ public class GameManager : MonoBehaviour {
 						}
 					}
 					//if rotated 180 degrees && check left or bot
-					else if ((tiles[i][j].GetComponent<Tile>().angle == Tile.Angle.ROTATE_180 && (checkLeft (i, j) || checkBottom (i, j))) || tiles[i][j].GetComponent<Tile>().startTile == true) {
+					else if ((tiles[i][j].GetComponent<Tile>().angle == Tile.Angle.ROTATE_180 && (checkLeft (i, j) || checkBottom (i, j)))) {
 						//tiles[i][j].GetComponent<Tile>().connectedState = Tile.Connection.CONNECTED;
 						if (!connectedTiles.Contains (tiles[i][j])) {
 							connectedTiles.Add (tiles[i][j]);
@@ -124,7 +139,7 @@ public class GameManager : MonoBehaviour {
 						}
 					}
 					//if rotated 270 degrees && check bot or right
-					else if ((tiles[i][j].GetComponent<Tile>().angle == Tile.Angle.ROTATE_270 && (checkBottom (i, j) || checkRight (i, j))) || tiles[i][j].GetComponent<Tile>().startTile == true) {
+					else if ((tiles[i][j].GetComponent<Tile>().angle == Tile.Angle.ROTATE_270 && (checkBottom (i, j) || checkRight (i, j)))) {
 						//tiles[i][j].GetComponent<Tile>().connectedState = Tile.Connection.CONNECTED;
 						if (!connectedTiles.Contains (tiles[i][j])) {
 							connectedTiles.Add (tiles[i][j]);
@@ -134,8 +149,10 @@ public class GameManager : MonoBehaviour {
 					else {
 						//connectedTiles.Remove(tiles[i][j]);
 						if (i == 0 && j == 0) {
-
-							connectedTiles.RemoveRange(1, connectedTiles.Count);
+							for (int k=1; k<connectedTiles.Count; k++) {
+								disconnectedTiles.Add (connectedTiles[i]);
+							}
+							connectedTiles.RemoveRange(1, connectedTiles.Count-1);
 
 						}
 						//tiles[i][j].GetComponent<Tile>().connectedState = Tile.Connection.NOT_CONNECTED;
@@ -145,7 +162,7 @@ public class GameManager : MonoBehaviour {
 				//if tile is a three way
 				if (tiles[i][j].GetComponent<Tile>().type == Tile.TileType.THREE_WAY) {
 					//if tile is rotated 0 degrees check top, right, bot
-					if ((tiles[i][j].GetComponent<Tile>().angle  == Tile.Angle.ROTATE_0 && (checkTop (i, j) || checkRight (i, j) || checkBottom (i, j))) || tiles[i][j].GetComponent<Tile>().startTile == true) {
+					if ((tiles[i][j].GetComponent<Tile>().angle  == Tile.Angle.ROTATE_0 && (checkTop (i, j) || checkRight (i, j) || checkBottom (i, j)))) {
 						//tiles[i][j].GetComponent<Tile>().connectedState = Tile.Connection.CONNECTED;
 						if (!connectedTiles.Contains (tiles[i][j])) {
 							connectedTiles.Add (tiles[i][j]);
@@ -153,7 +170,7 @@ public class GameManager : MonoBehaviour {
 						}
 					}
 					//check right, top, left
-					else if ((tiles[i][j].GetComponent<Tile>().angle  == Tile.Angle.ROTATE_90 && (checkRight (i, j) || checkTop (i, j) || checkLeft (i, j))) || tiles[i][j].GetComponent<Tile>().startTile == true) {
+					else if ((tiles[i][j].GetComponent<Tile>().angle  == Tile.Angle.ROTATE_90 && (checkRight (i, j) || checkTop (i, j) || checkLeft (i, j)))) {
 						//tiles[i][j].GetComponent<Tile>().connectedState = Tile.Connection.CONNECTED;
 						if (!connectedTiles.Contains (tiles[i][j])) {
 							connectedTiles.Add (tiles[i][j]);
@@ -161,14 +178,14 @@ public class GameManager : MonoBehaviour {
 						}
 					}
 					//check bot, left, top
-					else if ((tiles[i][j].GetComponent<Tile>().angle == Tile.Angle.ROTATE_180 && (checkBottom (i, j) || checkLeft (i, j) || checkTop (i, j))) || tiles[i][j].GetComponent<Tile>().startTile == true) {
+					else if ((tiles[i][j].GetComponent<Tile>().angle == Tile.Angle.ROTATE_180 && (checkBottom (i, j) || checkLeft (i, j) || checkTop (i, j)))) {
 						//tiles[i][j].GetComponent<Tile>().connectedState = Tile.Connection.CONNECTED;
 						if (!connectedTiles.Contains (tiles[i][j])) {
 							connectedTiles.Add (tiles[i][j]);
 							index ++;
 						}
 					}
-					else if ((tiles[i][j].GetComponent<Tile>().angle == Tile.Angle.ROTATE_270 && (checkLeft (i, j) || checkBottom (i, j) || checkRight (i, j))) || tiles[i][j].GetComponent<Tile>().startTile == true) {
+					else if ((tiles[i][j].GetComponent<Tile>().angle == Tile.Angle.ROTATE_270 && (checkLeft (i, j) || checkBottom (i, j) || checkRight (i, j)))) {
 						//tiles[i][j].GetComponent<Tile>().connectedState = Tile.Connection.CONNECTED;
 						if (!connectedTiles.Contains (tiles[i][j])) {
 							connectedTiles.Add (tiles[i][j]);
@@ -177,8 +194,10 @@ public class GameManager : MonoBehaviour {
 					}
 					else {
 						if (i == 0 && j == 0) {
-
-							connectedTiles.RemoveRange(1, connectedTiles.Count);
+							for (int k=1; k<connectedTiles.Count; k++) {
+								disconnectedTiles.Add (connectedTiles[i]);
+							}
+							connectedTiles.RemoveRange(1, connectedTiles.Count-1);
 
 						}
 						//tiles[i][j].GetComponent<Tile>().connectedState = Tile.Connection.NOT_CONNECTED;
@@ -187,7 +206,7 @@ public class GameManager : MonoBehaviour {
 
 				//if tile is a cross road
 				if (tiles[i][j].GetComponent<Tile>().type == Tile.TileType.CROSS) {
-					if ((checkTop (i, j) || checkRight (i, j) || checkBottom (i, j) || checkLeft (i, j)) || tiles[i][j].GetComponent<Tile>().startTile == true) {
+					if ((checkTop (i, j) || checkRight (i, j) || checkBottom (i, j) || checkLeft (i, j))) {
 						//tiles[i][j].GetComponent<Tile>().connectedState = Tile.Connection.CONNECTED;
 						if (!connectedTiles.Contains (tiles[i][j])) {
 							connectedTiles.Add (tiles[i][j]);
@@ -196,8 +215,10 @@ public class GameManager : MonoBehaviour {
 					}
 					else {
 						if (i == 0 && j == 0) {
-
-							connectedTiles.RemoveRange(1, connectedTiles.Count);
+							for (int k=1; k<connectedTiles.Count; k++) {
+								disconnectedTiles.Add (connectedTiles[i]);
+							}
+							connectedTiles.RemoveRange(1, connectedTiles.Count-1);
 
 						}
 						//tiles[i][j].GetComponent<Tile>().connectedState = Tile.Connection.NOT_CONNECTED;
@@ -249,6 +270,7 @@ public class GameManager : MonoBehaviour {
 			}	
 		}
 		connectedTiles.Clear();
+		disconnectedTiles.Clear();
 	}
 
 	//randomly place tiles in different locations of the grid with different rotations

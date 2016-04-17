@@ -15,7 +15,6 @@ public class ArmMovement : MonoBehaviour {
 		Vector2 dir = new Vector2 (0, Input.GetAxis("Vertical"));
 
 		float rotZ = Mathf.Atan2 (dir.y, dir.x) * Mathf.Rad2Deg;
-
 		if (dir.x >= 0) {
 			transform.rotation = Quaternion.Euler  (0f, 0f, rotZ);
 
