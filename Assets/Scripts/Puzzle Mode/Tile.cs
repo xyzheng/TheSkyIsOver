@@ -3,33 +3,46 @@ using System.Collections;
 
 public class Tile : MonoBehaviour {
 	
-	public enum ConnectionType { FAILED, CONNECTED, CONNECTED_RIGHT }
+	public enum TileType { ONE_WAY, TWO_WAY, THREE_WAY, CROSS }
+	public enum Angle { ROTATE_0, ROTATE_90, ROTATE_180, ROTATE_270 }
+	public enum Connection { NOT_CONNECTED, CONNECTED }
 
-	public int x;
-	public int y;
-
-	//constructor
-	public Tile (int x, int y) {
-		this.x = x;
-		this.y = y;
-	}
-
+	public const int none = 0;
 	public const int top = 1;
 	public const int right = 2;
-	public const int bottom = 4;
+	public const int bottom = 4; 
 	public const int left = 8;
-	
-	// Use this for initialization
+
+	public TileType type;
+	public Angle angle;
+	public Connection connectedState;
+	public bool startTile;
+
 	void Start () {
-	
+		//startTile = false;
 	}
-	
-	// Update is called once per frame
+
 	void Update () {
-	
+		if (connectedState == Connection.CONNECTED) {
+			SpriteRenderer rend = GetComponent<SpriteRenderer>();
+			rend.color = Color.yellow;
+		}
+		else {
+			SpriteRenderer rend = GetComponent<SpriteRenderer>();
+			rend.color = Color.white;
+		}
+
 	}
 
-	bool isConnected () {
+	public void connect () {
+		SpriteRenderer rend = GetComponent<SpriteRenderer>();
+		rend.color = Color.yellow;
+		connectedState = Connection.CONNECTED;
+	}
 
+	public void disconnect () {
+		SpriteRenderer rend = GetComponent<SpriteRenderer>();
+		rend.color = Color.white;
+		connectedState = Connection.NOT_CONNECTED;
 	}
 }

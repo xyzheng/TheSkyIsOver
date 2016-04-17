@@ -10,7 +10,7 @@ public class ArmMovement : MonoBehaviour {
 		x = transform.localScale.x;
 		ls = transform.localScale;
 	}
-	
+
 	void Update () {
 		Vector2 dir = new Vector2 (0, Input.GetAxis("Vertical"));
 
@@ -23,7 +23,7 @@ public class ArmMovement : MonoBehaviour {
 			transform.localScale = ls;
 		}
 		else {
-			transform.rotation = Quaternion.Euler  (0f, 0f, rotZ);
+			transform.rotation = Quaternion.Euler  (0f, 0f, rotZ+180);
 			ls.x = -x;
 			transform.localScale = ls;
 		}
