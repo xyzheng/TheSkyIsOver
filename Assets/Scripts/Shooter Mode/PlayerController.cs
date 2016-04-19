@@ -8,6 +8,8 @@ public class PlayerController : MonoBehaviour {
 	public GameObject playerBullet2;
 	public GameObject bulletPosition1;
 	public GameObject bulletPosition2;
+	Transform leftArm;
+	Transform rightArm;
 	Rigidbody2D rbody;
 	Animator anim;
 	public float moveSpeed = 15f;
@@ -20,6 +22,8 @@ public class PlayerController : MonoBehaviour {
 		laser = GameObject.Find("GameManager").GetComponent<AudioSource>();
 		rbody = GetComponent<Rigidbody2D> ();
 		playerHP = 5;
+		leftArm = transform.GetChild(2);
+		rightArm = transform.GetChild(3);
 	}
 	
 	// Update is called once per frame
@@ -43,11 +47,31 @@ public class PlayerController : MonoBehaviour {
 		}
 	}
 
+	//getting hit by enemy shots damages player by 1 
 	void OnTriggerEnter2D(Collider2D col){
 	
 		if ((col.tag == "EnemyBullet") || (col.tag == "Enemy")) {
+			StartCoroutine(flicker());
 			playerHP --;
 			Destroy (col.gameObject);
 		}
 	}
+
+	//flicker when player gets hit
+	public IEnumerator flicker () {
+		float duration = 1.0f;
+		//Debug.Log (duration);
+		while (duration > 0f) {
+			duration -= Time.deltaTime;
+
+			transform.GetComponent<SpriteRenderer>().enabled = !transform.GetComponent<SpriteRenderer>().enabled;
+			leftArm.GetComponent<SpriteRenderer>().enabled = !leftArm.GetComponent<SpriteRenderer>().enabled;
+			rightArm.GetComponent<SpriteRenderer>().enabled = !rightArm.GetComponent<SpriteRenderer>().enabled;
+			yield return new WaitForSeconds (0.5f);
+
+		}
+		transform.GetComponent<SpriteRenderer>().enabled = true;
+		//Debug.Log (duration);
+	}
+
 }
