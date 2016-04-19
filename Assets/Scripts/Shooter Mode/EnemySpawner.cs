@@ -26,7 +26,15 @@ public class EnemySpawner : MonoBehaviour {
 		Vector2 max = Camera.main.ViewportToWorldPoint (new Vector2 (1, 1));
 
 		GameObject anEnemy = (GameObject)Instantiate (enemy);
-		anEnemy.transform.position = new Vector2 (min.x, Random.Range(min.y, max.y));
+
+		//spawn either left or right side
+		int randomSide = Random.Range (0, 2);
+		if (randomSide == 0) {
+			anEnemy.transform.position = new Vector2 (min.x + 0.5f, Random.Range(min.y, max.y));
+		}
+		else {
+			anEnemy.transform.position = new Vector2 (max.x - 0.5f, Random.Range(min.y, max.y));
+		}
 	
 		// schedule when to spawn next enemy
 

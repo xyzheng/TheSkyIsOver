@@ -11,16 +11,19 @@ public class PlayerController : MonoBehaviour {
 	Animator anim;
 	public float moveSpeed = 15f;
 
+	//sounds
+	AudioSource laser;
+
 	// Use this for initialization
 	void Start () {
+		laser = GameObject.Find("GameManager").GetComponent<AudioSource>();
 		rbody = GetComponent<Rigidbody2D> ();
 	}
 	
 	// Update is called once per frame
 	void Update () {
-
 		if (Input.GetKeyDown (KeyCode.Space)) {
-		
+			laser.Play();
 			GameObject bullet01 = (GameObject)Instantiate (playerBullet);
 			bullet01.transform.position = bulletPosition1.transform.position;
 
@@ -36,6 +39,7 @@ public class PlayerController : MonoBehaviour {
 	void OnTriggerEnter2D(Collider2D col){
 	
 		if ((col.tag == "EnemyBullet") || (col.tag == "Enemy")) {
+			Destroy (col.gameObject);
 			Destroy (gameObject);
 		}
 	}

@@ -4,7 +4,7 @@ using System.Collections;
 public class rotateTiles : MonoBehaviour {
 
 	public Tile rotation;
-	public float turnRate = 100f;
+	public float turnRate = 200f;
 	private Quaternion destination = Quaternion.identity;
 	private bool isRotating;
 

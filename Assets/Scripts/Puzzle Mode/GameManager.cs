@@ -2,13 +2,20 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour {
 
+	public enum gameState {LOAD, TITLE, SOLVED}
+	public gameState state = gameState.LOAD;
 	public GameObject oneWay;
 	public GameObject twoWay;
 	public GameObject threeWay;
 	public GameObject cross;
+
+	//timer
+	public Text timerText;
+	float timer;
 
 	//dimensions of board
 	private int width;
@@ -31,41 +38,33 @@ public class GameManager : MonoBehaviour {
 		}
 		connectedTiles = new List<GameObject>();
 		disconnectedTiles = new List<GameObject>();
+		timer = 10.0f;
 		generateLevel ();
 	}
 	
 	// Update is called once per frame
 	void Update () {
 		if (Input.GetKeyDown(KeyCode.R)) {
+			timer = 10.0f;
 			index = 0;
 			clearTiles();
 			generateLevel();
 		}
 		check();
 
-		for (int i=0; i<connectedTiles.Count; i++) {
-			connectedTiles[i].GetComponent<Tile>().connectedState = Tile.Connection.CONNECTED;
-		}
-
-		for (int i=0; i<disconnectedTiles.Count; i++) {
-			disconnectedTiles[i].GetComponent<Tile>().connectedState = Tile.Connection.NOT_CONNECTED;
-		}
-
 		//win puzzle, change scene to shooter
 		if (connectedTiles.Contains (tiles[4][4])) {
-			SceneManager.LoadScene ("scene1");
+			state = gameState.SOLVED;
+		//	SceneManager.LoadScene ("scene1");
 		}
-		/*
-		for (int i=0; i<5; i++) {
-			for (int j=0; j<5; j++) {
-				if (!connectedTiles.Contains(tiles[i][j])) {
-					tiles[i][j].GetComponent<Tile>().connectedState = Tile.Connection.NOT_CONNECTED;
-				}
-			}
-		}
-		*/
 
-		//Debug.Log (index.ToString() + " " + connectedTiles.Count);
+		//countdown timer
+		timerText.text = "Time: " + Mathf.Round(timer * 100f) / 100f;
+		timer -= Time.deltaTime;
+		if (timer < 0) {
+			SceneManager.LoadScene("scene1");
+			//Debug.Log ("done");
+		}
 	}
 		
 	public void check () {
@@ -79,6 +78,7 @@ public class GameManager : MonoBehaviour {
 							//tiles[i][j].GetComponent<Tile>().connectedState = Tile.Connection.CONNECTED;
 						if (!connectedTiles.Contains (tiles[i][j])) {
 							connectedTiles.Add (tiles[i][j]);
+							disconnectedTiles.Remove (tiles[i][j]);
 							index ++;
 						}
 					}
@@ -87,28 +87,27 @@ public class GameManager : MonoBehaviour {
 							//tiles[i][j].GetComponent<Tile>().connectedState = Tile.Connection.CONNECTED;
 						if (!connectedTiles.Contains (tiles[i][j])) {
 							connectedTiles.Add (tiles[i][j]);
+							disconnectedTiles.Remove (tiles[i][j]);
 							index ++;
 						}
 					}
-					// if start tile
+
 					else {
-						//connectedTiles.Remove(tiles[i][j]);
-						if (i == 0 && j == 0) {
-							for (int k=1; k<connectedTiles.Count; k++) {
-								disconnectedTiles.Add (connectedTiles[i]);
-							}
-							connectedTiles.RemoveRange(1, connectedTiles.Count - 1);
-						}
+						int indexStart = connectedTiles.IndexOf(tiles[i][j]);
+						//Debug.Log (connectedTiles.Contains (tiles[i][j]));
 						/*
-						for (int ind=index; ind<connectedTiles.Count; ind++) {
-							connectedTiles.RemoveAt(ind);
-							index--;
+						if (i != 0 &&  j != 0 && connectedTiles.Contains (tiles[i][j])) {
+							int indexStart = connectedTiles.IndexOf(tiles[i][j]);
+							Debug.Log (indexStart.ToString());
+							Debug.Log (connectedTiles.Count.ToString());
+
+							for (int k=indexStart; k<connectedTiles.Count; k++) {
+								disconnectedTiles.Add (connectedTiles[k]);
+							}
+						
+						//connectedTiles.RemoveRange(indexStart, connectedTiles.Count - 1);
 						}
-*/
-						//if (tiles[i][j].GetComponent<Tile>().startTile != true) {
-						//tiles[i][j].GetComponent<Tile>().connectedState = Tile.Connection.NOT_CONNECTED;
-						//}
-		
+						*/
 					}
 				}
 
@@ -119,6 +118,7 @@ public class GameManager : MonoBehaviour {
 						//tiles[i][j].GetComponent<Tile>().connectedState = Tile.Connection.CONNECTED;
 						if (!connectedTiles.Contains (tiles[i][j])) {
 							connectedTiles.Add (tiles[i][j]);
+							disconnectedTiles.Remove (tiles[i][j]);
 							index ++;
 						}
 					}
@@ -127,6 +127,7 @@ public class GameManager : MonoBehaviour {
 						//tiles[i][j].GetComponent<Tile>().connectedState = Tile.Connection.CONNECTED;
 						if (!connectedTiles.Contains (tiles[i][j])) {
 							connectedTiles.Add (tiles[i][j]);
+							disconnectedTiles.Remove (tiles[i][j]);
 							index ++;
 						}
 					}
@@ -135,6 +136,7 @@ public class GameManager : MonoBehaviour {
 						//tiles[i][j].GetComponent<Tile>().connectedState = Tile.Connection.CONNECTED;
 						if (!connectedTiles.Contains (tiles[i][j])) {
 							connectedTiles.Add (tiles[i][j]);
+							disconnectedTiles.Remove (tiles[i][j]);
 							index ++;
 						}
 					}
@@ -143,19 +145,22 @@ public class GameManager : MonoBehaviour {
 						//tiles[i][j].GetComponent<Tile>().connectedState = Tile.Connection.CONNECTED;
 						if (!connectedTiles.Contains (tiles[i][j])) {
 							connectedTiles.Add (tiles[i][j]);
+							disconnectedTiles.Remove (tiles[i][j]);
 							index ++;
 						}
 					}
 					else {
-						//connectedTiles.Remove(tiles[i][j]);
-						if (i == 0 && j == 0) {
-							for (int k=1; k<connectedTiles.Count; k++) {
-								disconnectedTiles.Add (connectedTiles[i]);
+						if (i != 0 &&  j != 0 && connectedTiles.Contains (tiles[i][j])) {
+							int indexStart = connectedTiles.IndexOf(tiles[i][j]);
+							Debug.Log (indexStart.ToString());
+							Debug.Log (connectedTiles.Count.ToString());
+							/*
+							for (int k=indexStart; k<connectedTiles.Count; k++) {
+								disconnectedTiles.Add (connectedTiles[k]);
 							}
-							connectedTiles.RemoveRange(1, connectedTiles.Count-1);
-
+						*/
+							//connectedTiles.RemoveRange(indexStart, connectedTiles.Count - 1);
 						}
-						//tiles[i][j].GetComponent<Tile>().connectedState = Tile.Connection.NOT_CONNECTED;
 					}
 				}
 
@@ -166,6 +171,7 @@ public class GameManager : MonoBehaviour {
 						//tiles[i][j].GetComponent<Tile>().connectedState = Tile.Connection.CONNECTED;
 						if (!connectedTiles.Contains (tiles[i][j])) {
 							connectedTiles.Add (tiles[i][j]);
+							disconnectedTiles.Remove (tiles[i][j]);
 							index ++;
 						}
 					}
@@ -174,6 +180,7 @@ public class GameManager : MonoBehaviour {
 						//tiles[i][j].GetComponent<Tile>().connectedState = Tile.Connection.CONNECTED;
 						if (!connectedTiles.Contains (tiles[i][j])) {
 							connectedTiles.Add (tiles[i][j]);
+							disconnectedTiles.Remove (tiles[i][j]);
 							index ++;
 						}
 					}
@@ -182,6 +189,7 @@ public class GameManager : MonoBehaviour {
 						//tiles[i][j].GetComponent<Tile>().connectedState = Tile.Connection.CONNECTED;
 						if (!connectedTiles.Contains (tiles[i][j])) {
 							connectedTiles.Add (tiles[i][j]);
+							disconnectedTiles.Remove (tiles[i][j]);
 							index ++;
 						}
 					}
@@ -189,18 +197,22 @@ public class GameManager : MonoBehaviour {
 						//tiles[i][j].GetComponent<Tile>().connectedState = Tile.Connection.CONNECTED;
 						if (!connectedTiles.Contains (tiles[i][j])) {
 							connectedTiles.Add (tiles[i][j]);
+							disconnectedTiles.Remove (tiles[i][j]);
 							index ++;
 						}
 					}
 					else {
-						if (i == 0 && j == 0) {
-							for (int k=1; k<connectedTiles.Count; k++) {
-								disconnectedTiles.Add (connectedTiles[i]);
+						if (i != 0 &&  j != 0 && connectedTiles.Contains (tiles[i][j])) {
+							int indexStart = connectedTiles.IndexOf(tiles[i][j]);
+							Debug.Log (indexStart.ToString());
+							Debug.Log (connectedTiles.Count.ToString());
+							/*
+							for (int k=indexStart; k<connectedTiles.Count; k++) {
+								disconnectedTiles.Add (connectedTiles[k]);
 							}
-							connectedTiles.RemoveRange(1, connectedTiles.Count-1);
-
+						*/
+							//connectedTiles.RemoveRange(indexStart, connectedTiles.Count - 1);
 						}
-						//tiles[i][j].GetComponent<Tile>().connectedState = Tile.Connection.NOT_CONNECTED;
 					}
 				}
 
@@ -210,18 +222,22 @@ public class GameManager : MonoBehaviour {
 						//tiles[i][j].GetComponent<Tile>().connectedState = Tile.Connection.CONNECTED;
 						if (!connectedTiles.Contains (tiles[i][j])) {
 							connectedTiles.Add (tiles[i][j]);
+							disconnectedTiles.Remove (tiles[i][j]);
 							index ++;
 						}
 					}
 					else {
-						if (i == 0 && j == 0) {
-							for (int k=1; k<connectedTiles.Count; k++) {
-								disconnectedTiles.Add (connectedTiles[i]);
+						if (i != 0 &&  j != 0 && connectedTiles.Contains (tiles[i][j])) {
+							int indexStart = connectedTiles.IndexOf(tiles[i][j]);
+							Debug.Log (indexStart.ToString());
+							Debug.Log (connectedTiles.Count.ToString());
+							/*
+							for (int k=indexStart; k<connectedTiles.Count; k++) {
+								disconnectedTiles.Add (connectedTiles[k]);
 							}
-							connectedTiles.RemoveRange(1, connectedTiles.Count-1);
-
+						*/
+							//connectedTiles.RemoveRange(indexStart, connectedTiles.Count - 1);
 						}
-						//tiles[i][j].GetComponent<Tile>().connectedState = Tile.Connection.NOT_CONNECTED;
 					}
 				}
 			}
@@ -233,7 +249,7 @@ public class GameManager : MonoBehaviour {
 			((tiles[x][y+1].GetComponent<Tile>().type == Tile.TileType.ONE_WAY && (tiles[x][y+1].GetComponent<Tile>().angle == Tile.Angle.ROTATE_0 || tiles[x][y+1].GetComponent<Tile>().angle == Tile.Angle.ROTATE_180)) || 
 				(tiles[x][y+1].GetComponent<Tile>().type == Tile.TileType.TWO_WAY && (tiles[x][y+1].GetComponent<Tile>().angle == Tile.Angle.ROTATE_180 || tiles[x][y+1].GetComponent<Tile>().angle == Tile.Angle.ROTATE_270)) || 
 				(tiles[x][y+1].GetComponent<Tile>().type == Tile.TileType.THREE_WAY && (tiles[x][y+1].GetComponent<Tile>().angle == Tile.Angle.ROTATE_180 || tiles[x][y+1].GetComponent<Tile>().angle == Tile.Angle.ROTATE_270 ||
-					tiles[x][y+1].GetComponent<Tile>().angle == Tile.Angle.ROTATE_0)) || tiles[x][y+1].GetComponent<Tile>().type == Tile.TileType.CROSS));
+					tiles[x][y+1].GetComponent<Tile>().angle == Tile.Angle.ROTATE_0)) || tiles[x][y+1].GetComponent<Tile>().type == Tile.TileType.CROSS)); //&& tiles[x][y+1].GetComponent<Tile>().connectedToTileConnectedToStart == true);
 	}
 		
 	bool checkLeft (int x, int y) {
@@ -241,7 +257,7 @@ public class GameManager : MonoBehaviour {
 			((tiles[x-1][y].GetComponent<Tile>().type == Tile.TileType.ONE_WAY && (tiles[x-1][y].GetComponent<Tile>().angle == Tile.Angle.ROTATE_90 || tiles[x-1][y].GetComponent<Tile>().angle == Tile.Angle.ROTATE_270)) || 
 				(tiles[x-1][y].GetComponent<Tile>().type == Tile.TileType.TWO_WAY && (tiles[x-1][y].GetComponent<Tile>().angle == Tile.Angle.ROTATE_0 || tiles[x-1][y].GetComponent<Tile>().angle == Tile.Angle.ROTATE_270)) || 
 				(tiles[x-1][y].GetComponent<Tile>().type == Tile.TileType.THREE_WAY && (tiles[x-1][y].GetComponent<Tile>().angle == Tile.Angle.ROTATE_0 || tiles[x-1][y].GetComponent<Tile>().angle == Tile.Angle.ROTATE_90 ||
-					tiles[x-1][y].GetComponent<Tile>().angle == Tile.Angle.ROTATE_270)) || tiles[x-1][y].GetComponent<Tile>().type == Tile.TileType.CROSS));
+					tiles[x-1][y].GetComponent<Tile>().angle == Tile.Angle.ROTATE_270)) || tiles[x-1][y].GetComponent<Tile>().type == Tile.TileType.CROSS)); //&& tiles[x][y+1].GetComponent<Tile>().connectedToTileConnectedToStart == true);
 	}
 
 	bool checkBottom (int x, int y) {
@@ -249,7 +265,7 @@ public class GameManager : MonoBehaviour {
 			((tiles[x][y-1].GetComponent<Tile>().type == Tile.TileType.ONE_WAY && (tiles[x][y-1].GetComponent<Tile>().angle == Tile.Angle.ROTATE_0 || tiles[x][y-1].GetComponent<Tile>().angle == Tile.Angle.ROTATE_180)) || 
 				(tiles[x][y-1].GetComponent<Tile>().type == Tile.TileType.TWO_WAY && (tiles[x][y-1].GetComponent<Tile>().angle == Tile.Angle.ROTATE_0 || tiles[x][y-1].GetComponent<Tile>().angle == Tile.Angle.ROTATE_90)) || 
 				(tiles[x][y-1].GetComponent<Tile>().type == Tile.TileType.THREE_WAY && (tiles[x][y-1].GetComponent<Tile>().angle == Tile.Angle.ROTATE_0 || tiles[x][y-1].GetComponent<Tile>().angle == Tile.Angle.ROTATE_90 ||
-					tiles[x][y-1].GetComponent<Tile>().angle == Tile.Angle.ROTATE_180)) || tiles[x][y-1].GetComponent<Tile>().type == Tile.TileType.CROSS));
+					tiles[x][y-1].GetComponent<Tile>().angle == Tile.Angle.ROTATE_180)) || tiles[x][y-1].GetComponent<Tile>().type == Tile.TileType.CROSS));// && tiles[x][y+1].GetComponent<Tile>().connectedToTileConnectedToStart == true);
 			
 	}
 
@@ -258,7 +274,7 @@ public class GameManager : MonoBehaviour {
 			((tiles[x+1][y].GetComponent<Tile>().type == Tile.TileType.ONE_WAY && (tiles[x+1][y].GetComponent<Tile>().angle == Tile.Angle.ROTATE_90 || tiles[x+1][y].GetComponent<Tile>().angle == Tile.Angle.ROTATE_270)) || 
 				(tiles[x+1][y].GetComponent<Tile>().type == Tile.TileType.TWO_WAY && (tiles[x+1][y].GetComponent<Tile>().angle == Tile.Angle.ROTATE_90 || tiles[x+1][y].GetComponent<Tile>().angle == Tile.Angle.ROTATE_180)) || 
 				(tiles[x+1][y].GetComponent<Tile>().type == Tile.TileType.THREE_WAY && (tiles[x+1][y].GetComponent<Tile>().angle == Tile.Angle.ROTATE_90 || tiles[x+1][y].GetComponent<Tile>().angle == Tile.Angle.ROTATE_180 ||
-					tiles[x+1][y].GetComponent<Tile>().angle == Tile.Angle.ROTATE_270)) || tiles[x+1][y].GetComponent<Tile>().type == Tile.TileType.CROSS));
+					tiles[x+1][y].GetComponent<Tile>().angle == Tile.Angle.ROTATE_270)) || tiles[x+1][y].GetComponent<Tile>().type == Tile.TileType.CROSS)); //&& tiles[x][y+1].GetComponent<Tile>().connectedToTileConnectedToStart == true);
 	}
 
 	//destroy all instantiated objects
@@ -299,7 +315,10 @@ public class GameManager : MonoBehaviour {
 						index ++;
 						//tiles[i][j].GetComponent<Tile>().connectedState = Tile.Connection.CONNECTED;
 					}
-					else if (i == 4 && j == 4) {
+					else {
+						disconnectedTiles.Add (tiles[i][j]);
+					}
+					if (i == 4 && j == 4) {
 						tiles[i][j].GetComponent<SpriteRenderer>().color = Color.green;
 					}
 				}
@@ -325,14 +344,18 @@ public class GameManager : MonoBehaviour {
 					}
 					//start and end color change to yellow
 					tiles[i][j].GetComponent<Tile>().type = Tile.TileType.TWO_WAY;
-					if ((i == 0 && j == 0)) {
+
+					if (i == 0 && j == 0) {
 						//tiles[i][j].GetComponent<Tile>().connect();
-						tiles[i][j].GetComponent<Tile>().startTile = true;
-						//tiles[i][j].GetComponent<Tile>().connectedState = Tile.Connection.CONNECTED;
+						//tiles[i][j].GetComponent<Tile>().startTile = true;
 						connectedTiles.Add (tiles[i][j]);
 						index ++;
+						//tiles[i][j].GetComponent<Tile>().connectedState = Tile.Connection.CONNECTED;
 					}
-					else if (i == 4 && j == 4) {
+					else {
+						disconnectedTiles.Add (tiles[i][j]);
+					}
+					if (i == 4 && j == 4) {
 						tiles[i][j].GetComponent<SpriteRenderer>().color = Color.green;
 					}
 				}
@@ -358,14 +381,18 @@ public class GameManager : MonoBehaviour {
 					}
 					tiles[i][j].GetComponent<Tile>().type = Tile.TileType.THREE_WAY;
 					//start and end color change to yellow
-					if ((i == 0 && j == 0)) {
+
+					if (i == 0 && j == 0) {
 						//tiles[i][j].GetComponent<Tile>().connect();
-						tiles[i][j].GetComponent<Tile>().startTile = true;
-						//tiles[i][j].GetComponent<Tile>().connectedState = Tile.Connection.CONNECTED;
+						//tiles[i][j].GetComponent<Tile>().startTile = true;
 						connectedTiles.Add (tiles[i][j]);
 						index ++;
+						//tiles[i][j].GetComponent<Tile>().connectedState = Tile.Connection.CONNECTED;
 					}
-					else if (i == 4 && j == 4) {
+					else {
+						disconnectedTiles.Add (tiles[i][j]);
+					}
+					if (i == 4 && j == 4) {
 						tiles[i][j].GetComponent<SpriteRenderer>().color = Color.green;
 					}
 				}
@@ -375,14 +402,18 @@ public class GameManager : MonoBehaviour {
 					tiles[i][j] = ((GameObject)Instantiate (cross, new Vector3 (i, j, 0), Quaternion.identity));
 					tiles[i][j].GetComponent<Tile>().type = Tile.TileType.CROSS;
 					//start and end color change to yellow
-					if ((i == 0 && j == 0)) {
+
+					if (i == 0 && j == 0) {
 						//tiles[i][j].GetComponent<Tile>().connect();
-						tiles[i][j].GetComponent<Tile>().startTile = true;
-						//tiles[i][j].GetComponent<Tile>().connectedState = Tile.Connection.CONNECTED;
+						//tiles[i][j].GetComponent<Tile>().startTile = true;
 						connectedTiles.Add (tiles[i][j]);
 						index ++;
+						//tiles[i][j].GetComponent<Tile>().connectedState = Tile.Connection.CONNECTED;
 					}
-					else if (i == 4 && j == 4) {
+					else {
+						disconnectedTiles.Add (tiles[i][j]);
+					}
+					if (i == 4 && j == 4) {
 						tiles[i][j].GetComponent<SpriteRenderer>().color = Color.green;
 					}
 				}
