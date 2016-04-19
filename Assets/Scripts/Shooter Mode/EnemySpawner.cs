@@ -6,6 +6,7 @@ public class EnemySpawner : MonoBehaviour {
 	float maxSpawnRate = 5f;
 
 	public GameObject enemy;
+	public GameObject enemy2;
 
 	// Use this for initialization
 	void Start () {

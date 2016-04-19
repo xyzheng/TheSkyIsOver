@@ -3,6 +3,7 @@ using System.Collections;
 
 public class PlayerController : MonoBehaviour {
 
+	public int playerHP;
 	public GameObject playerBullet;
 	public GameObject playerBullet2;
 	public GameObject bulletPosition1;
@@ -18,6 +19,7 @@ public class PlayerController : MonoBehaviour {
 	void Start () {
 		laser = GameObject.Find("GameManager").GetComponent<AudioSource>();
 		rbody = GetComponent<Rigidbody2D> ();
+		playerHP = 5;
 	}
 	
 	// Update is called once per frame
@@ -34,13 +36,18 @@ public class PlayerController : MonoBehaviour {
 
 		Vector2 movement_vector = new Vector2 (Input.GetAxisRaw ("Horizontal"), Input.GetAxisRaw ("Vertical"));
 		rbody.MovePosition (rbody.position + movement_vector * moveSpeed * Time.deltaTime);
+
+		//if player has 0 hp left, die
+		if (playerHP == 0) {
+			Destroy (transform.gameObject);
+		}
 	}
 
 	void OnTriggerEnter2D(Collider2D col){
 	
 		if ((col.tag == "EnemyBullet") || (col.tag == "Enemy")) {
+			playerHP --;
 			Destroy (col.gameObject);
-			Destroy (gameObject);
 		}
 	}
 }
