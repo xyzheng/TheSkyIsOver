@@ -2,6 +2,7 @@
 using System.Collections;
 using UnityEngine.SceneManagement;
 using UnityEditor;
+using UnityEngine.UI;
 
 public class MenuManager : MonoBehaviour {
 
@@ -31,12 +32,16 @@ public class MenuManager : MonoBehaviour {
 
 	public void optionsButton () {
 		if (!isFading) {
+			//change options text back to size 30 before setting panel to false
+			menuPanel.GetComponentsInChildren<Buttons>()[1].GetComponentInChildren<Text>().fontSize = 30;
 			menuPanel.SetActive(false);
 			optionsPanel.SetActive(true);
 		}
 	}
 
 	public void backButton () {
+		//change back text back to size 30 before setting panel to false
+		optionsPanel.GetComponentInChildren<Buttons>().GetComponentInChildren<Text>().fontSize = 30;
 		menuPanel.SetActive(true);
 		optionsPanel.SetActive(false);
 	}
