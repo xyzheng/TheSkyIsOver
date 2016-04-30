@@ -62,7 +62,7 @@ public class GameManager : MonoBehaviour {
 		timerText.text = "Time: " + Mathf.Round(timer * 100f) / 100f;
 		timer -= Time.deltaTime;
 		if (timer < 0) {
-			SceneManager.LoadScene("scene1");
+			SceneManager.LoadScene("Shooter");
 			//Debug.Log ("done");
 		}
 	}

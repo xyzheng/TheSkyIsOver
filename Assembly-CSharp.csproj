@@ -45,7 +45,9 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+     <Compile Include="Assets\Scripts\Buttons.cs" />
      <Compile Include="Assets\Scripts\Fade.cs" />
+     <Compile Include="Assets\Scripts\MenuManager.cs" />
      <Compile Include="Assets\Scripts\Puzzle Mode\Board.cs" />
      <Compile Include="Assets\Scripts\Puzzle Mode\GameManager.cs" />
      <Compile Include="Assets\Scripts\Puzzle Mode\Tile.cs" />

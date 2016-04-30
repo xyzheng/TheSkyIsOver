@@ -3,10 +3,17 @@ using System.Collections;
 
 public class EnemySpawner : MonoBehaviour {
 
+	public GameObject shooterGM;
+	public ShooterGameManager sgm;
+
 	float maxSpawnRate = 5f;
 
 	public GameObject enemy;
 	public GameObject enemy2;
+
+	//use percentages to determine how often each one spawns as time goes on
+	float enemyOnePercent;
+	float enemyTwoPercent;
 
 	// Use this for initialization
 	void Start () {
@@ -26,7 +33,15 @@ public class EnemySpawner : MonoBehaviour {
 		Vector2 min = Camera.main.ViewportToWorldPoint(new Vector2(0,0));
 		Vector2 max = Camera.main.ViewportToWorldPoint (new Vector2 (1, 1));
 
-		GameObject anEnemy = (GameObject)Instantiate (enemy);
+		GameObject anEnemy;
+
+		int randomEnemy = Random.Range (0, 2);
+		if (randomEnemy == 0) {
+			anEnemy = (GameObject)Instantiate (enemy);
+		}
+		else {
+			anEnemy = (GameObject)Instantiate (enemy2);
+		}
 
 		//spawn either left or right side
 		int randomSide = Random.Range (0, 2);

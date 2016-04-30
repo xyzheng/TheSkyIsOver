@@ -4,6 +4,9 @@ using System.Collections;
 public class PlayerController : MonoBehaviour {
 
 	public int playerHP;
+	public bool immune;
+	bool flickering;
+
 	public GameObject playerBullet;
 	public GameObject playerBullet2;
 	public GameObject bulletPosition1;
@@ -22,6 +25,8 @@ public class PlayerController : MonoBehaviour {
 		laser = GameObject.Find("GameManager").GetComponent<AudioSource>();
 		rbody = GetComponent<Rigidbody2D> ();
 		playerHP = 5;
+		immune = false;
+		flickering = false;
 		leftArm = transform.GetChild(2);
 		rightArm = transform.GetChild(3);
 	}
@@ -59,16 +64,16 @@ public class PlayerController : MonoBehaviour {
 
 	//flicker when player gets hit
 	public IEnumerator flicker () {
+		flickering = true;
 		float duration = 1.0f;
 		//Debug.Log (duration);
 		while (duration > 0f) {
 			duration -= Time.deltaTime;
-
+			Debug.Log (Time.deltaTime);
 			transform.GetComponent<SpriteRenderer>().enabled = !transform.GetComponent<SpriteRenderer>().enabled;
 			leftArm.GetComponent<SpriteRenderer>().enabled = !leftArm.GetComponent<SpriteRenderer>().enabled;
 			rightArm.GetComponent<SpriteRenderer>().enabled = !rightArm.GetComponent<SpriteRenderer>().enabled;
 			yield return new WaitForSeconds (0.5f);
-
 		}
 		transform.GetComponent<SpriteRenderer>().enabled = true;
 		//Debug.Log (duration);
