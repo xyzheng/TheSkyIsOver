@@ -7,13 +7,16 @@ using UnityEngine.SceneManagement;
 public class Buttons : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler {
 
 	Text buttonText;
-	AudioSource hoverSound;
 	bool isPlaying;
+
+	AudioSource hoverSound;
 	AudioSource[] clips;
 
 	// Use this for initialization
 	void Start () {
 		buttonText = GetComponentInChildren<Text>();
+		clips = GameObject.Find("Menu Manager").GetComponents<AudioSource>();
+		hoverSound = clips[1];
 		/*
 		if (SceneManager.GetActiveScene().name == "Menu") {
 			hoverSound = GameObject.Find("Menu Manager").GetComponent<AudioSource>();
@@ -27,17 +30,15 @@ public class Buttons : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler 
 	}
 
 	public void OnPointerEnter (PointerEventData e) {
-		buttonText.fontSize = 35;
-		//hoverSound.Play();
+		buttonText.fontSize = 55;
+		hoverSound.Play();
 		isPlaying = true;
 	}
 
 	public void OnPointerExit (PointerEventData e) {
-		buttonText.fontSize = 30;	
-		/*
+		buttonText.fontSize = 50;	
 		if (isPlaying && hoverSound != null) {
 			hoverSound.Stop();
 		}
-		*/
 	}
 }

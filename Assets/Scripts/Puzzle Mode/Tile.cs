@@ -11,7 +11,8 @@ public class Tile : MonoBehaviour {
 	public Angle angle;
 	public Connection connectedState;
 	public bool startTile;
-	public bool connectedToTileConnectedToStart;
+	public bool connectedToTileConnectedToStart = true;
+	public bool endTile;
 
 	public GameObject gameManager;
 	public GameManager gmScript;
@@ -27,11 +28,12 @@ public class Tile : MonoBehaviour {
 	SpriteRenderer rend;
 
 	void Start () {
-		connectedToTileConnectedToStart = false;
+		//connectedToTileConnectedToStart = false;
 		rend = GetComponent<SpriteRenderer>();
 
 		gameManager = GameObject.Find ("Game Manager");
 		gmScript = gameManager.GetComponent<GameManager>();
+		/*
 		positionX = (int)transform.position.x;
 		positionY = (int)transform.position.y;
 
@@ -48,47 +50,21 @@ public class Tile : MonoBehaviour {
 		if (positionX >= 1) {
 			left = gmScript.tiles[positionX - 1][positionY].GetComponent<Tile>();
 		}
-
+		*/
 	}
 
 	void Update () {
-		if (gmScript.connectedTiles.Contains(transform.gameObject)) {
-			connectedState = Connection.CONNECTED;
+		/*
+		if (connectedToTileConnectedToStart) {
 			rend.color = Color.yellow;
+		//	Debug.Log (rend.color);
+		}
+		else if (!connectedToTileConnectedToStart && endTile) {
+			rend.color = Color.green;
 		}
 		else {
-			if (transform.position.x != 4 && transform.position.y != 4) {
-				rend.color = Color.white;
-			}
-			connectedState = Connection.NOT_CONNECTED;
+			rend.color = Color.white;
 		}
-	}
-
-	public void connect () {
-		SpriteRenderer rend = GetComponent<SpriteRenderer>();
-		rend.color = Color.yellow;
-		connectedState = Connection.CONNECTED;
-	}
-
-	public void disconnect () {
-		SpriteRenderer rend = GetComponent<SpriteRenderer>();
-		rend.color = Color.white;
-		connectedState = Connection.NOT_CONNECTED;
-	}
-
-	public void checkLeft () {
-		//return (left.startTile || left.connectedToTileConnectedToStart
-	}
-
-	public void checkRight () {
-
-	}
-
-	public void checkTop () {
-
-	}
-
-	public void checkBottom () {
-
+		*/
 	}
 }

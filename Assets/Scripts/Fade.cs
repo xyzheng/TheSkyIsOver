@@ -1,37 +1,40 @@
 ﻿using UnityEngine;
 using System.Collections;
+using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class Fade : MonoBehaviour {
 
-	public GameObject gm;
-	GameManager gmScript;
+	public CanvasGroup fadingPanel;
+	public bool isFading;
+	public bool faded;
 
-	// Use this for initialization
 	void Start () {
-		gmScript = gm.GetComponent<GameManager>();
+		isFading = false;
+		faded = false;
 	}
-	
-	// Update is called once per frame
-	void Update () {
-		Debug.Log (gmScript.state);
-		if (gmScript.state == GameManager.gameState.SOLVED) {
-			StartCoroutine (doFade ());
+
+	//fade to black effect
+	public IEnumerator fadeOut () {
+		isFading = true;
+		float fadeTime = 1.0f;
+		while (fadingPanel.alpha < 1) {
+			fadingPanel.alpha += Time.deltaTime / fadeTime;
+			yield return null;
 		}
+		faded = true;
+		isFading = false;
 	}
 
-	public void fade () {
-
-	}
-
-	IEnumerator doFade () {
-		CanvasGroup cg = GetComponent<CanvasGroup>();
-	
-			while (cg.alpha > 0) {
-				cg.alpha -= Time.deltaTime / 2;
-				yield return null;
-			}
-
-		cg.interactable = false;
-		yield return null;
+	//fade from black effect
+	public IEnumerator fadeIn () {
+		isFading = true;
+		float fadeTime = 1.0f;
+		while (fadingPanel.alpha > 0) {
+			fadingPanel.alpha -= Time.deltaTime / fadeTime;
+			yield return null;
+		}
+		faded = true;
+		isFading = false;
 	}
 }

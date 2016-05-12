@@ -45,26 +45,29 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+     <Compile Include="Assets\Scripts\ArmMovement.cs" />
+     <Compile Include="Assets\Scripts\BunnyGn.cs" />
      <Compile Include="Assets\Scripts\Buttons.cs" />
+     <Compile Include="Assets\Scripts\EnemyAI.cs" />
+     <Compile Include="Assets\Scripts\EnemyBullet.cs" />
+     <Compile Include="Assets\Scripts\EnemyControl.cs" />
+     <Compile Include="Assets\Scripts\EnemyGun.cs" />
+     <Compile Include="Assets\Scripts\EnemyHealth.cs" />
+     <Compile Include="Assets\Scripts\EnemySpawner.cs" />
+     <Compile Include="Assets\Scripts\EnemySpawnerRight.cs" />
      <Compile Include="Assets\Scripts\Fade.cs" />
+     <Compile Include="Assets\Scripts\GameManagement.cs" />
+     <Compile Include="Assets\Scripts\HurtEffect.cs" />
+     <Compile Include="Assets\Scripts\LeftPlayerBullet.cs" />
      <Compile Include="Assets\Scripts\MenuManager.cs" />
+     <Compile Include="Assets\Scripts\PlayerBullet.cs" />
+     <Compile Include="Assets\Scripts\PlayerController.cs" />
      <Compile Include="Assets\Scripts\Puzzle Mode\Board.cs" />
      <Compile Include="Assets\Scripts\Puzzle Mode\GameManager.cs" />
+     <Compile Include="Assets\Scripts\Puzzle Mode\LevelManager.cs" />
      <Compile Include="Assets\Scripts\Puzzle Mode\Tile.cs" />
      <Compile Include="Assets\Scripts\Puzzle Mode\createTiles.cs" />
      <Compile Include="Assets\Scripts\Puzzle Mode\rotateTiles.cs" />
-     <Compile Include="Assets\Scripts\Shooter Mode\ArmMovement.cs" />
-     <Compile Include="Assets\Scripts\Shooter Mode\EnemyAI.cs" />
-     <Compile Include="Assets\Scripts\Shooter Mode\EnemyBullet.cs" />
-     <Compile Include="Assets\Scripts\Shooter Mode\EnemyControl.cs" />
-     <Compile Include="Assets\Scripts\Shooter Mode\EnemyGun.cs" />
-     <Compile Include="Assets\Scripts\Shooter Mode\EnemySpawner.cs" />
-     <Compile Include="Assets\Scripts\Shooter Mode\LeftPlayerBullet.cs" />
-     <Compile Include="Assets\Scripts\Shooter Mode\MoveEnemyBullet.cs" />
-     <Compile Include="Assets\Scripts\Shooter Mode\PlayerBullet.cs" />
-     <Compile Include="Assets\Scripts\Shooter Mode\PlayerController.cs" />
-     <Compile Include="Assets\Scripts\Shooter Mode\ShooterGameManager.cs" />
-     <Compile Include="Assets\Scripts\Shooter Mode\changeBetweenModes.cs" />
  <Reference Include="UnityEngine.UI">
  <HintPath>/Applications/Unity/Unity.app/Contents/UnityExtensions/Unity/GUISystem/UnityEngine.UI.dll</HintPath>
  </Reference>

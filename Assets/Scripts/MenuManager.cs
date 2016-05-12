@@ -10,38 +10,38 @@ public class MenuManager : MonoBehaviour {
 	public GameObject menuPanel;
 	public GameObject optionsPanel;
 
-	//fading effect objects
-	public CanvasGroup fadingPanel;
-	private float fadeSpeed;
-	public bool isFading;
-	private bool faded;
+	private AudioSource bgm;
+	private AudioSource hoverSound;
 
-	public void Start () {
-		fadingPanel = GameObject.Find ("Canvas").GetComponentInChildren<CanvasGroup>();
-		fadeSpeed = 1.0f;
-		isFading = false;
-		faded = false;
+	public Toggle soundToggle;
+	public Toggle musicToggle;
+	public Slider soundSlider;
+	public Slider musicSlider;
+
+	//fading
+	private Fade fadeScript;
+
+	void Start () {
+		fadeScript = GetComponent<Fade>();
+		hoverSound = GetComponents<AudioSource>()[1];
+		bgm = GetComponents<AudioSource>()[0];
 	}
 
 	public void playButton () {
-		if (!isFading) {
-			StartCoroutine(fadeOut());
-		}
+		StartCoroutine (fadeScript.fadeOut());
 		//StartCoroutine(fadeScript.fadeOut());
 	}
 
 	public void optionsButton () {
-		if (!isFading) {
 			//change options text back to size 30 before setting panel to false
-			menuPanel.GetComponentsInChildren<Buttons>()[1].GetComponentInChildren<Text>().fontSize = 30;
+			menuPanel.GetComponentsInChildren<Buttons>()[1].GetComponentInChildren<Text>().fontSize = 50;
 			menuPanel.SetActive(false);
 			optionsPanel.SetActive(true);
-		}
 	}
 
 	public void backButton () {
 		//change back text back to size 30 before setting panel to false
-		optionsPanel.GetComponentInChildren<Buttons>().GetComponentInChildren<Text>().fontSize = 30;
+		optionsPanel.GetComponentInChildren<Buttons>().GetComponentInChildren<Text>().fontSize = 50;
 		menuPanel.SetActive(true);
 		optionsPanel.SetActive(false);
 	}
@@ -53,24 +53,39 @@ public class MenuManager : MonoBehaviour {
 	}
 
 	void Update () {
-		if (faded) {
+		if (fadeScript.faded) {
 			SceneManager.LoadScene ("Puzzle");
 		}
-		//if (fadeScript.fadingPanel.alpha == 0) {
-		//	SceneManager.LoadScene ("Puzzle");
-		//}
 	}
 
-	//fade to black effect
-	public IEnumerator fadeOut () {
-		isFading = true;
-		float fadeTime = 1.0f;
-		while (fadingPanel.alpha < 1) {
-			fadingPanel.alpha += Time.deltaTime / fadeTime;
-			yield return null;
+	//SOUNDS AND MUSIC
+	//sound slider
+	public void updateSoundSlider () {
+		if (soundToggle.isOn) {
+			hoverSound.volume = soundSlider.value;
 		}
-		faded = true;
-		isFading = false;
 	}
-
+	//sound toggle
+	public void toggleSound () {
+		if (!soundToggle.isOn) {
+			hoverSound.volume = 0f;
+		}
+		else {
+			hoverSound.volume = soundSlider.value;
+		}
+	}
+	//music slider
+	public void updateMusicSlider () {
+		if (musicToggle.isOn) { 
+			bgm.volume = musicSlider.value;
+		}
+	}
+	public void toggleMusic () {
+		if (!musicToggle.isOn) {
+			bgm.volume = 0f;
+		}
+		else {
+			bgm.volume = musicSlider.value;
+		}
+	}
 }
