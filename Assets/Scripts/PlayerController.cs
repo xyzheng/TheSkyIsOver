@@ -5,6 +5,7 @@ using UnityEngine.SceneManagement;
 
 public class PlayerController : MonoBehaviour {
 
+	public AudioSource shoot;
 	public Text lose;
 	public GameObject levelManager;
 	public LevelManager lmScript;
@@ -29,6 +30,7 @@ public class PlayerController : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
+		shoot = GetComponent<AudioSource>();
 		levelManager = GameObject.Find ("Level Manager");
 		lmScript = levelManager.GetComponent<LevelManager>();
 		rbody = GetComponent<Rigidbody2D> ();
@@ -81,7 +83,7 @@ public class PlayerController : MonoBehaviour {
 			transform.position = pos;
 
 			if (Input.GetKeyDown (KeyCode.Space)) {
-			
+				shoot.Play();
 				GameObject bullet01 = (GameObject)Instantiate (playerBullet);
 				bullet01.transform.position = bulletPosition1.transform.position;
 
